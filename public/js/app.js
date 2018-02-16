@@ -4,6 +4,12 @@ var questionCounter;
 var maximumQuestion;
 var moneyCounter = 0;
 
+// Get the video
+var video = document.getElementById("myVideo");
+
+// Get the button
+var btn = document.getElementById("myBtn");
+
 function init() {
     moneyCounter = 0;
     questionCounter = 0;
@@ -11,6 +17,7 @@ function init() {
     questionBucket = shuffle(questionBucket);
     currentQuestion = questionBucket[0];
     $('#question').html(currentQuestion);
+    video.pause();
 }
 
 function shuffle(array) {
@@ -33,20 +40,34 @@ function shuffle(array) {
 function next() {
     moneyCounter += parseFloat(document.getElementById('answer').value);
 
-    if (questionCounter == maximumQuestion - 1) {
+    if (questionCounter == maximumQuestion - 2) {
         // We are in the last question
         $('#next').hide();
-        $('#answer').hide();
-        $('#question').hide();
         $('#submit').show();
     } else {
         // We have still some questions
         currentQuestion = questionBucket[++questionCounter];
         $('#question').html(currentQuestion);
     }
-    $('#answer').val('$0.00');
+    $('#answer').val('');
 }
 
 function submit() {
+    var weeks = moneyCounter / 175;
+    var finalResult = "Con lo que gastas una familia en pobreza y pobreza extrema se puede alimentar por " + weeks.toFixed(2) + " semanas."
+    $('#result').html(finalResult);
+    $('.first-content').hide();
+    $('.second-content').show();
+    pauseResume();
+}
 
+// Pause and play the video, and change the button text
+function pauseResume() {
+    if (video.paused) {
+        video.play();
+        btn.innerHTML = "Pause";
+    } else {
+        video.pause();
+        btn.innerHTML = "Play";
+    }
 }
