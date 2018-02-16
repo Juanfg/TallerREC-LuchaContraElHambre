@@ -44,11 +44,9 @@ function next() {
         // We are in the last question
         $('#next').hide();
         $('#submit').show();
-    } else {
-        // We have still some questions
-        currentQuestion = questionBucket[++questionCounter];
-        $('#question').html(currentQuestion);
     }
+    currentQuestion = questionBucket[++questionCounter];
+    $('#question').html(currentQuestion);
     $('#answer').val('');
 }
 
